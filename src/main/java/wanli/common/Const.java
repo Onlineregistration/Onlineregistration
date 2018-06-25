@@ -5,8 +5,10 @@ package wanli.common;
  * @Author: zxh
  * @Date: Created in 2018/6/9
  */
-public class Const {
+
+public abstract class Const {
 	public static final String CURRENT_USER = "currentUser";
 
 	public static final String USERNAME = "username";
+
 }

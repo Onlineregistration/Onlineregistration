@@ -16,4 +16,11 @@ public interface MatchService {
 	ServerResponse<PageInfo> getMatchListByType(int type, int pageNum, int pageSize);
 
 	ServerResponse<List<Matchtype>> getMatchType();
+
+	boolean addMatchType(String typename);
+
+	boolean delMatchTypeById(int id);
+
+	boolean selectMatchTypeByName(String typename);
+
 }

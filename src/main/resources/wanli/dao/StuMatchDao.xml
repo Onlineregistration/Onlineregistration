@@ -59,6 +59,7 @@
             group_id=#{groupId};
     </select>
 
+
     <delete id="deleteStuMatchById">
         DELETE
         FROM
@@ -74,4 +75,5 @@
         WHERE
             id = #{id};
     </update>
+
 </mapper>

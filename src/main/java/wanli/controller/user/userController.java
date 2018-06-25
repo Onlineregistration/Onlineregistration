@@ -1,7 +1,9 @@
 package wanli.controller.user;
 
+import com.mchange.lang.ShortUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -82,12 +84,10 @@ public class userController {
 	@RequestMapping("/myMsg")
 	@ResponseBody
 	public ServerResponse<User> myMsg(HttpSession session) {
-		System.out.println("请求拿去数据");
 		User user = (User) session.getAttribute(Const.CURRENT_USER);
 		if (user == null) {
 			return ServerResponse.createByErrorMessage("用户未登录");
 		}
-		System.out.println(user);
 		return ServerResponse.createBySuccess(user);
 	}
 
@@ -117,5 +117,19 @@ public class userController {
 		}
 		session.removeAttribute(Const.CURRENT_USER);
 		return ServerResponse.createBySuccess();
+	}
+
+	@PostMapping("/update_msg")
+	@ResponseBody
+	public ServerResponse updateMsg(User usermsg, HttpSession session) {
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if (user == null) {
+			return ServerResponse.createByErrorMessage("用户未登录");
+		}
+		if (user.getId() != usermsg.getId()) {
+			return ServerResponse.createByError();
+		}
+		usermsg.setUsername(user.getUsername());
+		return userService.updateUserMsg(usermsg);
 	}
 }

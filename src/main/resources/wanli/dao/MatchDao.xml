@@ -12,9 +12,10 @@
 		SELECT
 		<include refid="Base_Column_List" />
 		FROM
-		wanli_match
+			wanli_match
 		WHERE
-		match_type = #{type}
+			match_type = #{type}
+
 	</select>
 
 	<select id="listMatchType" resultType="Matchtype">

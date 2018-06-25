@@ -84,4 +84,5 @@ public class User {
 	public void setIdentity(Integer identity) {
 		this.identity = identity;
 	}
+
 }
