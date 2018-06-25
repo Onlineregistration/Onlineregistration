@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wanli.dao.UserDao">
+
+	<sql id="Base_Column_List">
+		id, username, name, sex, phone, mail, Tsize, identity
+	</sql>
+
+	<insert id="addUser">
+		INSERT INTO `user` ( username, `password`, `name` )
+		VALUES
+			( #{username}, #{password}, #{name} )
+	</insert>
+
+	<update id="updateUser">
+		UPDATE
+		user
+		<set>
+			<if test="password != null">
+				password = #{password},
+			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="sex != null">
+				sex = #{sex},
+			</if>
+			<if test="phone != null">
+				phone = #{phone},
+			</if>
+			<if test="mail != null">
+				mail = #{mail},
+			</if>
+			<if test="Tsize != null">
+				Tsize = #{Tsize}
+			</if>
+		</set>
+		<where>
+			<if test="username != null">
+				username = #{username}
+			</if>
+			<if test="name != null">
+				AND name = #{name}
+			</if>
+			<if test="sex != null">
+				AND sex = #{sex}
+			</if>
+			<if test="phone != null">
+				AND phone = #{phone}
+			</if>
+			<if test="mail != null">
+				AND mail = #{mail}
+			</if>
+			<if test="Tsize != null">
+				AND Tsize = #{Tsize}
+			</if>
+		</where>
+	</update>
+
+	<select id="getUserByUsernameAndPassword" resultType="User">
+		SELECT
+		<include refid="Base_Column_List"/>
+		FROM
+		user
+		WHERE
+		username = #{username}
+		AND
+		password = #{password}
+	</select>
+
+	<select id="getCountByUsername" resultType="java.lang.Integer">
+		SELECT
+			count( 1 )
+		FROM
+			`user`
+		WHERE
+			username = #{username}
+	</select>
+
+
+</mapper>

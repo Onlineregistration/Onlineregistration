@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wanli.dao.TeacherMatchDao">
+
+    <delete id="deleteTeacherMatch">
+        DELETE
+        FROM
+            teacher_match
+        WHERE
+            match_id = #{matchId};
+    </delete>
+
+    <insert id="insertTeacherMatch">
+        INSERT INTO teacher_match ( teacher_id, match_id )
+        VALUES
+            (
+              #{teacherId},
+              #{matchId}
+            );
+    </insert>
+
+    <select id="selectTeacherMatch" resultType="TeacherMatch">
+        SELECT
+            id,
+            teacher_id,
+            match_id
+        FROM
+            teacher_match
+        WHERE
+            match_id = #{matchId}
+            AND
+            teacher_id=#{teacherId};
+    </select>
+</mapper>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wanli.dao.MatchDao">
+
+	<sql id="Base_Column_List">
+		id, match_type, match_name, match_start_time, match_end_time, regist_start_time, regist_end_time, place, member_num,teacher_id,group_num
+	</sql>
+
+	<select id="getMatchListByType" resultType="WanliMatch">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		wanli_match
+		WHERE
+		match_type = #{type}
+	</select>
+
+	<select id="listMatchType" resultType="Matchtype">
+		SELECT
+			id,
+			typename
+		FROM
+			match_type
+	</select>
+
+	<sql id="Base_Column_List1">
+		match_type, match_name, match_start_time, match_end_time, regist_start_time, regist_end_time, place, member_num,teacher_id,group_num
+	</sql>
+	<insert id="insertMatch">
+		INSERT INTO
+		wanli_match ( <include refid="Base_Column_List1"/> )
+		VALUES
+		(
+			#{matchType},
+			#{matchName},
+			#{matchStartTime},
+			#{matchEndTime},
+			#{registStartTime},
+			#{registEndTime},
+			#{place},
+			#{memberNum},
+			#{teacherId},
+			#{groupNum}
+		);
+	</insert>
+
+	<select id="selectMatch" resultType="WanliMatch">
+		SELECT
+		<include refid="Base_Column_List"/>
+		FROM
+		wanli_match
+		<where>
+			<if test="matchName!=null">
+				match_name = #{matchName}
+			</if>
+			<if test="matchType!=null">
+				AND  match_type = #{matchType}
+			</if>
+			<if test="place!=null">
+				AND  place = #{place}
+			</if>
+		</where>
+	</select>
+
+	<delete id="deleteMatch">
+		DELETE
+		FROM
+		wanli_match
+		WHERE
+		id = #{id};
+	</delete>
+
+	<update id="updateMatch">
+		UPDATE
+		wanli_match
+		<set>
+			<if test="matchType !=null">
+				match_type=#{matchType},
+			</if>
+			<if test="matchName !=null">
+				match_name=#{matchName},
+			</if>
+			<if test="matchStartTime !=null">
+				match_start_time=#{matchStartTime},
+			</if>
+			<if test="matchEndTime !=null">
+				match_end_time=#{matchEndTime},
+			</if>
+			<if test="registStartTime !=null">
+				regist_start_time=#{registStartTime},
+			</if>
+			<if test="registEndTime !=null">
+				regist_end_time=#{registEndTime},
+			</if>
+			<if test="place !=null">
+				place=#{place},
+			</if>
+			<if test="memberNum !=null">
+				member_num=#{memberNum},
+			</if>
+			<if test="teacherId !=null">
+				teacher_id=#{teacherId},
+			</if>
+			<if test="groupNum !=null">
+				group_num=#{groupNum}
+			</if>
+		</set>
+		where
+			id=#{id}
+	</update>
+
+	<select id="selectMatchById" resultType="WanliMatch">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+			wanli_match
+		WHERE
+			id = #{id}
+	</select>
+</mapper>

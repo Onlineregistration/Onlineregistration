@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wanli.dao.StudentDao">
+
+    <sql id="Base_Column_List">
+        id, match_type, match_name, match_start_time, match_end_time, regist_start_time, regist_end_time, place, member_num,group_num
+    </sql>
+    <select id="selectMatch" resultType="MyMatch">
+        SELECT
+            a.group_id,
+            b.match_name,
+            b.match_start_time,
+            b.match_end_time,
+            b.regist_start_time,
+            b.regist_end_time,
+            b.place,
+            b.member_num
+        FROM
+            stu_match a
+            INNER JOIN wanli_match b ON a.match_id = b.id
+        WHERE
+            a.stu_id = #{stuId};
+    </select>
+
+
+</mapper>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wanli.dao.StuMatchDao">
+
+    <insert id="insertStuMatch">
+        INSERT INTO
+          stu_match ( stu_id, stu_name,match_id, group_id, group_position )
+        VALUES
+	      (
+	        #{stuId},
+	        #{stuName},
+	        #{matchId},
+	        #{groupId},
+	        #{groupPosition}
+	      )
+    </insert>
+
+    <select id="selectStuMatchByStuIdAndMatchId" resultType="StuMatch">
+        SELECT
+            match_id,
+            stu_id,
+            match_id,
+            group_id,
+            group_position
+        FROM
+            stu_match
+        WHERE
+            stu_id = #{stuId}
+            AND match_id = #{matchId};
+    </select>
+
+    <delete id="deleteStuMatch">
+        DELETE
+        FROM
+            stu_match
+        WHERE
+            match_id = #{matchId};
+    </delete>
+
+    <delete id="deleteStuMatchByGroupId">
+         DELETE
+        FROM
+            stu_match
+        WHERE
+            group_id = #{groupId};
+    </delete>
+
+    <select id="selectStuMatchByGroupId" resultType="StuMatch">
+         SELECT
+            id,
+            stu_id,
+            stu_name,
+            group_position
+        FROM
+            stu_match
+        WHERE
+            group_id=#{groupId};
+    </select>
+
+    <delete id="deleteStuMatchById">
+        DELETE
+        FROM
+        stu_match
+        WHERE
+        id = #{id};
+    </delete>
+
+    <update id="updateStuMatchById">
+        UPDATE stu_match
+        SET stu_id = #{StuId},
+        stu_name = #{StuName}
+        WHERE
+            id = #{id};
+    </update>
+</mapper>
