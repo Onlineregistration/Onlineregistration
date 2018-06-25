@@ -18,7 +18,6 @@ public interface UserService {
 
 	int addUser(User user);
 
-
 	ServerResponse updateUserMsg(User usermsg);
 
 	ServerResponse<PageInfo> getAllUserByIdentity(int identify, int pageNum, int pageSize);

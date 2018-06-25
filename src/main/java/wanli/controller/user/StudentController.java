@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import wanli.common.Const;
 import wanli.enu.IdentifyCode;
 import wanli.pojo.Apply;
-import wanli.pojo.User;
-import wanli.pojo.WanliMatch;
+import wanli.pojo.MyMatch;
 import wanli.service.StudentService;
 import wanli.vo.ServerResponse;
 
@@ -66,12 +64,35 @@ public class StudentController {
 
 	@RequestMapping("/viewMyMatch")
 	@ResponseBody
-	public ServerResponse<List<WanliMatch>> viewMyMatch(Integer stuid, HttpSession session) {
+	public ServerResponse<List<MyMatch>> viewMyMatch(String stuid, HttpSession session) {
 		String result = identification(session, STUDENT_CODE);
 		if (result != null) {
 			return ServerResponse.createByErrorMessage(result);
 		}
-		return null;
+
+		if (stuid == null) {
+			return ServerResponse.createByError();
+		}
+		return studentService.listMyMatchByStuid(stuid);
+	}
+
+
+	@RequestMapping("/cancle")
+	@ResponseBody
+	public ServerResponse cancle(Integer groupid, HttpSession session) {
+
+		String result = identification(session, STUDENT_CODE);
+		if (result != null) {
+			return ServerResponse.createByErrorMessage(result);
+		}
+
+		if (groupid == null) {
+			return ServerResponse.createByError();
+		}
+		if (studentService.deleteMyMatch(groupid)) {
+			return ServerResponse.createBySuccessMessage("取消成功");
+		}
+		return ServerResponse.createByErrorMessage("取消失败");
 	}
 
 }
