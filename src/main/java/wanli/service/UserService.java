@@ -1,5 +1,6 @@
 package wanli.service;
 
+import com.github.pagehelper.PageInfo;
 import wanli.pojo.User;
 import wanli.vo.ServerResponse;
 
@@ -16,4 +17,10 @@ public interface UserService {
 	int userExist(String username);
 
 	int addUser(User user);
+
+	ServerResponse updateUserMsg(User usermsg);
+
+	ServerResponse<PageInfo> getAllUserByIdentity(int identify, int pageNum, int pageSize);
+
+	ServerResponse<User> getUserByUsername(String username);
 }

@@ -42,6 +42,7 @@
 		<property name="configLocation" value="classpath:spring/mybatis.xml"/>
 		<!-- 扫描java bean，自动使用别名 -->
 		<property name="typeAliasesPackage" value="wanli.pojo"/>
+
 		<!-- 分页插件 -->
 		<property name="plugins">
 			<array>

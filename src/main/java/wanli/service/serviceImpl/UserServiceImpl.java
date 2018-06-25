@@ -1,11 +1,16 @@
 package wanli.service.serviceImpl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wanli.dao.UserDao;
 import wanli.pojo.User;
 import wanli.service.UserService;
+import wanli.vo.BasicVo;
 import wanli.vo.ServerResponse;
+
+import java.util.List;
 
 /**
  * @Description:
@@ -17,6 +22,15 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserDao userDao;
+
+	@Override
+	public ServerResponse<User> getUserByUsername(String username) {
+		User user = userDao.getUserByUsername(username);
+		if (user == null) {
+			return ServerResponse.createByErrorMessage("查无此人");
+		}
+		return ServerResponse.createBySuccess(user);
+	}
 
 	@Override
 	public ServerResponse<User> getUserByUsernameAndPassword(String username, String password) {
@@ -48,4 +62,24 @@ public class UserServiceImpl implements UserService {
 	public int addUser(User user) {
 		return userDao.addUser(user);
 	}
+
+	@Override
+	public ServerResponse updateUserMsg(User usermsg) {
+		usermsg.setPassword(null);
+		usermsg.setIdentity(null);
+		usermsg.setId(null);
+		return userDao.updateUser(usermsg) > 0 ?
+				ServerResponse.createBySuccess() : ServerResponse.createByErrorMessage("修改失败");
+	}
+
+	@Override
+	public ServerResponse<PageInfo> getAllUserByIdentity(int identify, int pageNum, int pageSize) {
+		System.out.println(identify);
+		PageHelper.startPage(pageNum, pageSize);
+		List<BasicVo> userlist = userDao.getUserByIdentity(identify);
+		PageInfo page = new PageInfo(userlist);
+		return ServerResponse.createBySuccess(page);
+	}
+
+
 }

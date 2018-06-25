@@ -22,7 +22,7 @@
 			id,
 			typename
 		FROM
-			matchtype
+			match_type
 	</select>
 
 	<sql id="Base_Column_List1">
