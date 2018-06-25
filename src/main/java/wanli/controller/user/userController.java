@@ -1,6 +1,5 @@
 package wanli.controller.user;
 
-import com.mchange.lang.ShortUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +11,6 @@ import wanli.pojo.User;
 import wanli.service.UserService;
 import wanli.vo.ServerResponse;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -126,7 +124,8 @@ public class userController {
 		if (user == null) {
 			return ServerResponse.createByErrorMessage("用户未登录");
 		}
-		if (user.getId() != usermsg.getId()) {
+
+		if (!user.getUsername().equals(usermsg.getUsername())) {
 			return ServerResponse.createByError();
 		}
 		usermsg.setUsername(user.getUsername());

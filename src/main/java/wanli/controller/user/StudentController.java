@@ -38,28 +38,28 @@ public class StudentController {
 			return ServerResponse.createByErrorMessage(result);
 		}
 
-		String[] stuid = apply.getStuid();
-		String[] name = apply.getName();
-		for (int i = 0; i < stuid.length; i++) {
-			if (stuid[i] == "" || name[i] == "") {
-				return ServerResponse.createByErrorMessage("参赛人员信息不完整");
+		String[] stuid =apply.getStuid();
+		String[] name =apply.getName();
+		for(int i=0;i<stuid.length;i++){
+			if(stuid[i]==""||name[i]==""){
+				return  ServerResponse.createByErrorMessage("参赛人员信息不完整");
 			}
 		}
-		String groupname = apply.getGroupname();
-		if (!studentService.addGroupInformation(groupname, apply.getMatchid()) && groupname != null) {
-			return ServerResponse.createByErrorMessage("队名已经存在");
+		String groupname=apply.getGroupname();
+		if(!studentService.addGroupInformation(groupname,apply.getMatchid())&&groupname!=null){
+			return  ServerResponse.createByErrorMessage("队名已经存在");
 		}
 		//获取组id
-		Integer groupId = studentService.selectGroupByName(groupname, apply.getMatchid()).getGroupId();
+		Integer groupId=studentService.selectGroupByName(groupname,apply.getMatchid()).getGroupId();
 		//插入学生与比赛的相关信息
-		for (int i = 0; i < stuid.length; i++) {
+		for(int i=0;i<stuid.length;i++){
 			if (i == 0) {
-				studentService.addStuMatch(stuid[i], name[i], apply.getMatchid(), groupId, 1);
-			} else {
-				studentService.addStuMatch(stuid[i], name[i], apply.getMatchid(), groupId, 2);
+				studentService.addStuMatch(stuid[i],name[i],apply.getMatchid(),groupId,1);
+			}else{
+				studentService.addStuMatch(stuid[i],name[i],apply.getMatchid(),groupId,2);
 			}
 		}
-		return ServerResponse.createBySuccessMessage("报名成功");
+		return  ServerResponse.createBySuccessMessage("报名成功");
 	}
 
 	@RequestMapping("/viewMyMatch")
